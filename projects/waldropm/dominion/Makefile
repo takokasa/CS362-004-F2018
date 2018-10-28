@@ -37,3 +37,25 @@ all: playdom player
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	
+testShuffle: testShuffle.c dominion.o 
+	gcc -o testShuffle -g  testShuffle.c dominion.o rngs.o $(CFLAGS)
+	
+testUpdateCoins: testUpdateCoins.c dominion.o 
+	gcc -o testUpdateCoins -g  testUpdateCoins.c dominion.o rngs.o $(CFLAGS)
+
+testCompare: testCompare.c dominion.o rngs.o
+	gcc -o testCompare -g  testCompare.c dominion.o rngs.o $(CFLAGS)
+	
+testFullDeckCount: testFullDeckCount.c dominion.o rngs.o
+	gcc -o testFullDeckCount -g  testFullDeckCount.c dominion.o rngs.o $(CFLAGS)
+	
+testSupplyCount: testSupplyCount.c dominion.o rngs.o
+	gcc -o testSupplyCount -g  testSupplyCount.c dominion.o rngs.o $(CFLAGS)
+	
+cardtest1: cardtest1.c dominion.o rngs.o
+	gcc -o cardtest1 -g  cardtest1.c dominion.o rngs.o $(CFLAGS)
+	
+cardtest2: cardtest2.c dominion.o rngs.o
+	gcc -o cardtest2 -g  cardtest2.c dominion.o rngs.o $(CFLAGS)
+
