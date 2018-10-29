@@ -44,18 +44,59 @@ testShuffle: testShuffle.c dominion.o
 testUpdateCoins: testUpdateCoins.c dominion.o 
 	gcc -o testUpdateCoins -g  testUpdateCoins.c dominion.o rngs.o $(CFLAGS)
 
-testCompare: testCompare.c dominion.o rngs.o
-	gcc -o testCompare -g  testCompare.c dominion.o rngs.o $(CFLAGS)
+unittest1: unittest1.c dominion.o rngs.o
+	gcc -o unittest1 -g  unittest1.c -coverage dominion.o rngs.o $(CFLAGS)
 	
-testFullDeckCount: testFullDeckCount.c dominion.o rngs.o
-	gcc -o testFullDeckCount -g  testFullDeckCount.c dominion.o rngs.o $(CFLAGS)
+unittest2: unittest2.c dominion.o rngs.o
+	gcc -o unittest2 -g  unittest2.c -coverage dominion.o rngs.o $(CFLAGS)
+
+unittest3: unittest3.c dominion.o rngs.o
+	gcc -o unittest3 -g  unittest3.c -coverage dominion.o rngs.o $(CFLAGS)
 	
-testSupplyCount: testSupplyCount.c dominion.o rngs.o
-	gcc -o testSupplyCount -g  testSupplyCount.c dominion.o rngs.o $(CFLAGS)
+unittest4: unittest4.c dominion.o rngs.o
+	gcc -o unittest4 -g  unittest4.c -coverage dominion.o rngs.o $(CFLAGS)
 	
 cardtest1: cardtest1.c dominion.o rngs.o
-	gcc -o cardtest1 -g  cardtest1.c dominion.o rngs.o $(CFLAGS)
+	gcc -o cardtest1 -g  cardtest1.c -coverage dominion.o rngs.o $(CFLAGS)
 	
 cardtest2: cardtest2.c dominion.o rngs.o
-	gcc -o cardtest2 -g  cardtest2.c dominion.o rngs.o $(CFLAGS)
+	gcc -o cardtest2 -g  cardtest2.c -coverage dominion.o rngs.o $(CFLAGS)
+	
+cardtest3: cardtest3.c dominion.o rngs.o
+	gcc -o cardtest3 -g  cardtest3.c -coverage dominion.o rngs.o $(CFLAGS)
 
+cardtest4: cardtest4.c dominion.o rngs.o
+	gcc -o cardtest4 -g  cardtest4.c -coverage dominion.o rngs.o $(CFLAGS)
+
+unittestresults:
+	make unittest1
+	make unittest2
+	make unittest3
+	make unittest4
+	make cardtest1
+	make cardtest2
+	make cardtest3
+	make cardtest4
+	echo "******** Running Unit and Card Test ********" >> unittestresults.out
+	make tests >> unittestresuls.out
+	echo "******** Coverage ********" >> unittestresults.out
+	gcov -b unittest1.c >> unittestresults.out
+	gcov -b unittest2.c >> unittestresults.out
+	gcov -b unittest3.c >> unittestresults.out
+	gcov -b unittest4.c >> unittestresults.out
+	gcov -b cardtest1.c >> unittestresults.out
+	gcov -b cardtest2.c >> unittestresults.out
+	gcov -b cardtest3.c >> unittestresults.out
+	gcov -b cardtest4.c >> unittestresults.out
+	gcov -b dominion.c >> unittestresults.out
+	echo "Finished writing to file"
+
+tests:
+	./unittest1
+	./unittest2
+	./unittest3
+	./unittest4
+	./cardtest1
+	./cardtest2
+	./cardtest3
+	./cardtest4

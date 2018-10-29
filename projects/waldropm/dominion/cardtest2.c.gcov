@@ -1,0 +1,196 @@
+        -:    0:Source:cardtest2.c
+        -:    0:Graph:cardtest2.gcno
+        -:    0:Data:cardtest2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Include the following lines in your makefile:
+        -:    3: *
+        -:    4: *  cardtest2: cardtest2.c dominion.o rngs.o
+        -:    5: *	gcc -o cardtest2 -g  cardtest1.c dominion.o rngs.o $(CFLAGS)
+        -:    6: *
+        -:    7: * type "./cardtest2" to run
+        -:    8: * -----------------------------------------------------------------------
+        -:    9: */
+        -:   10:
+        -:   11:#include "dominion.h"
+        -:   12:#include "dominion_helpers.h"
+        -:   13:#include <string.h>
+        -:   14:#include <stdio.h>
+        -:   15:#include <assert.h>
+        -:   16:#include "rngs.h"
+        -:   17:#include <math.h>
+        -:   18:#include <stdlib.h>
+        -:   19:
+function countHandTreasure called 4 returned 100% blocks executed 100%
+        4:   20:int countHandTreasure(int player, struct gameState *state){
+        4:   21:    int i, card, count = 0;
+       22:   22:    for(i = 0; i < state->handCount[player]; i++){
+branch  0 taken 82%
+branch  1 taken 18% (fallthrough)
+       18:   23:        card = state->hand[player][i];
+       18:   24:        if (card == copper || card == silver || card == gold){
+branch  0 taken 33% (fallthrough)
+branch  1 taken 67%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+branch  4 taken 0% (fallthrough)
+branch  5 taken 100%
+       12:   25:            count++;
+        -:   26:        }
+        -:   27:    }
+        4:   28:    return count;
+        -:   29:}
+        -:   30:
+function countDeckTreasure called 8 returned 100% blocks executed 100%
+        8:   31:int countDeckTreasure(int player, struct gameState *state){
+        8:   32:    int i, card, count = 0;
+       64:   33:    for(i = 0; i < state->deckCount[player]; i++){
+branch  0 taken 88%
+branch  1 taken 13% (fallthrough)
+       56:   34:        card = state->deck[player][i];
+       56:   35:        if (card == copper || card == silver || card == gold){
+branch  0 taken 36% (fallthrough)
+branch  1 taken 64%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+branch  4 taken 0% (fallthrough)
+branch  5 taken 100%
+       36:   36:            count++;
+        -:   37:        }
+        -:   38:    }
+        8:   39:    return count;
+        -:   40:}
+        -:   41:
+function countDiscardTreasure called 4 returned 100% blocks executed 44%
+        4:   42:int countDiscardTreasure(int player, struct gameState *state){
+        4:   43:    int i, card, count = 0;
+        4:   44:    for(i = 0; i < state->discardCount[player]; i++){
+branch  0 taken 0%
+branch  1 taken 100% (fallthrough)
+    #####:   45:        card = state->discard[player][i];
+    #####:   46:        if (card == copper || card == silver || card == gold){
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:   47:            count++;
+        -:   48:        }
+        -:   49:    }
+        4:   50:    return count;
+        -:   51:}
+        -:   52:
+function printHand called 0 returned 0% blocks executed 0%
+    #####:   53:void printHand(int player, struct gameState *state){
+        -:   54:    int i, card;
+        -:   55:    
+    #####:   56:    for(i = 0; i < state->handCount[player]; i++){
+branch  0 never executed
+branch  1 never executed
+    #####:   57:        card = state->hand[player][i];
+    #####:   58:        printf("++++Test player %d has %dth card(s) %d in hand.\n", player, i, card);
+call    0 never executed
+        -:   59:    }
+    #####:   60:}
+        -:   61:
+function testAdventurerRefactor called 1 returned 100% blocks executed 81%
+        1:   62:void testAdventurerRefactor(){
+        1:   63:    int numPlayer = 2;
+        -:   64:    struct gameState G;
+        -:   65:    int player, before_hand_treasure, before_discard_treasure, before_deck_treasure, after_hand_treasure, after_discard_treasure, after_deck_treasure, before_hand, before_discard, before_deck;
+        -:   66:    
+        -:   67:    
+        1:   68:    int k[12] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall, minion, steward};
+        -:   69:    
+        1:   70:    printf("+++++adventurerRefactor() tests begin+++++\n");
+call    0 returned 100%
+        -:   71:    
+        1:   72:    initializeGame(numPlayer, k, 2, &G); // init a game
+call    0 returned 100%
+        -:   73:        // test playing adventure card for each player
+        3:   74:    for (player = 0; player < numPlayer; player++){
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
+        -:   75:        int temphand[MAX_HAND];// moved above the if statement
+        2:   76:        int drawntreasure=0;
+        -:   77:        int cardDrawn;
+        2:   78:        int z = 0;// this is the counter for the temp hand
+        2:   79:        G.hand[player][G.handCount[player]] = adventurer; // player gets the adventurer card
+        2:   80:        G.handCount[player]++;
+        2:   81:        if(countDeckTreasure(player, &G) < 2){// make sure the deck has at least two treasure cards
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+    #####:   82:            G.deck[player][G.deckCount[player]] = gold;
+    #####:   83:            G.deckCount[player]++;
+    #####:   84:            G.deck[player][G.deckCount[player]] = gold;
+    #####:   85:            G.deckCount[player]++;
+        -:   86:        }
+        -:   87:        //printHand(player, &G);
+        2:   88:        printf("-------------Test player %d----------------.\n", player);
+call    0 returned 100%
+        2:   89:        printf("Test player %d had %d treasure card(s) in deck, and total %d cards in deck before.\n", player, countDeckTreasure(player, &G), G.deckCount[player]);
+call    0 returned 100%
+call    1 returned 100%
+        -:   90:        
+        2:   91:        before_hand = G.handCount[player]; // record the total cards number in hand
+        2:   92:        before_deck = G.deckCount[player]; // record the total cards number in deck
+        2:   93:        before_discard = G.discardCount[player]; // record the total cards number in discard
+        -:   94:
+        2:   95:        before_hand_treasure = countHandTreasure(player, &G); // record the treasure cards number in hand
+call    0 returned 100%
+        2:   96:        before_deck_treasure = countDeckTreasure(player, &G); // record the treasure cards number in deck
+call    0 returned 100%
+        2:   97:        before_discard_treasure = countDiscardTreasure(player, &G); // record the treasure cards number in discard
+call    0 returned 100%
+        2:   98:        adventurerRefactor(&drawntreasure, &G, &player, &cardDrawn, temphand, &z);//play the adventure card
+call    0 returned 100%
+        2:   99:        after_hand_treasure = countHandTreasure(player, &G); // record the treasure cards number in hand
+call    0 returned 100%
+        2:  100:        after_deck_treasure = countDeckTreasure(player, &G); // record the treasure cards number in deck
+call    0 returned 100%
+        2:  101:        after_discard_treasure = countDiscardTreasure(player, &G); // record the treasure cards number in discard
+call    0 returned 100%
+        -:  102:        //printHand(player, &G);
+        -:  103:
+        2:  104:        printf("Test player %d had %d card(s) in deck after playing adventure.\n", player, G.deckCount[player]);
+call    0 returned 100%
+        2:  105:        printf("Test player %d had %d treasure card(s) in hand before, but now has %d treasure cards after playing adventure.\n", player, before_hand_treasure, after_hand_treasure);
+call    0 returned 100%
+        -:  106:        
+        2:  107:        assert(before_hand_treasure + 2 == after_hand_treasure); // get 2 new treasure cards in hand now.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:  108:        assert(before_deck_treasure - 2 == after_deck_treasure); // deck lost 2 treasure cards now.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:  109:        assert(before_discard_treasure == after_discard_treasure); // discard's treasure cards does not change.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:  110:        assert(before_hand + 2 == G.handCount[player]); // get 2 new cards in hand now.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:  111:        assert(before_discard + (before_deck - G.deckCount[player] - 2) == G.discardCount[player]); // the drawn non treasure cards from deck should go to discard
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        -:  112:    }
+        -:  113:
+        1:  114:    printf("+++++adventurerRefactor() test passed+++++\n");
+call    0 returned 100%
+        -:  115:    
+        1:  116:}
+        -:  117:
+function main called 1 returned 100% blocks executed 100%
+        1:  118:int main(int argc, char *argv[]){
+        1:  119:    testAdventurerRefactor();
+call    0 returned 100%
+        1:  120:    return 0;
+        -:  121:}
+        -:  122:

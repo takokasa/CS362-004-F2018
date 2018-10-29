@@ -661,11 +661,11 @@ int adventurerRefactor(int *drawntreasure, struct gameState *state, int *current
 
         *cardDrawn = state->hand[*currentPlayer][state->handCount[*currentPlayer]-1];//top card of hand is most recently drawn card.
 
-        if (*cardDrawn = copper || *cardDrawn == silver || *cardDrawn == gold)
+        if (*cardDrawn == copper || *cardDrawn == silver || *cardDrawn == gold)
 
             *drawntreasure = *drawntreasure + 1;
 
-        else
+        else{
 
             temphand[*z] = *cardDrawn;
 
@@ -673,7 +673,7 @@ int adventurerRefactor(int *drawntreasure, struct gameState *state, int *current
 
             *z = *z + 1;
 
-        
+        }
 
     }
 
@@ -692,7 +692,7 @@ int adventurerRefactor(int *drawntreasure, struct gameState *state, int *current
 // smithy refactor
 int smithyRefactor (int *currentPlayer, struct gameState *state, int *handPos) {
   //+3 Cards
-	for (int i = 0; i <= 3; i++){
+	for (int i = 0; i < 3; i++){
 		drawCard(*currentPlayer, state);
 	}
 			
@@ -707,7 +707,7 @@ int villageRefactor (int *currentPlayer, struct gameState *state, int *handPos) 
       drawCard(*currentPlayer, state);
 			
       //+2 Actions
-      state->numActions = state->numActions++;
+      state->numActions = state->numActions + 2;
 			
       //discard played card from hand
       discardCard(*handPos, *currentPlayer, state, 0);
@@ -720,7 +720,7 @@ int greatHallRefactor(int *currentPlayer, struct gameState *state, int *handPos)
       drawCard(*currentPlayer, state);
 			
       //+1 Actions
-      state->numActions + 2;
+      state->numActions++;
 			
       //discard card from hand
       discardCard(*handPos, *currentPlayer, state, 0);
@@ -761,7 +761,7 @@ int baronRefactor (struct gameState *state, int *choice1, int *currentPlayer){
 		    	p++;//Next card
 			}
 		}
-    }else
+    }else{
 		if (supplyCount(estate, state) > 0){
 		  	gainCard(estate, state, 0, *currentPlayer);//Gain an estate
 		  	state->supplyCount[estate]--;//Decrement Estates
@@ -769,7 +769,7 @@ int baronRefactor (struct gameState *state, int *choice1, int *currentPlayer){
 				isGameOver(state);
 		  	}
 		}
-    
+    }
 	return 0;
 }
 

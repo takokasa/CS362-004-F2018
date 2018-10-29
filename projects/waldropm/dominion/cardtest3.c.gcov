@@ -1,0 +1,101 @@
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Test for villageRefactor()
+        -:    3: * Include the following lines in your makefile:
+        -:    4: *
+        -:    5: *  cardtest3: cardtest3.c dominion.o rngs.o
+        -:    6: *	gcc -o cardtest3 -g  cardtest3.c dominion.o rngs.o $(CFLAGS)
+        -:    7: *
+        -:    8: * type "./cardtest3" to run
+        -:    9: * -----------------------------------------------------------------------
+        -:   10: */
+        -:   11:
+        -:   12:#include "dominion.h"
+        -:   13:#include "dominion_helpers.h"
+        -:   14:#include <string.h>
+        -:   15:#include <stdio.h>
+        -:   16:#include <assert.h>
+        -:   17:#include "rngs.h"
+        -:   18:#include <math.h>
+        -:   19:#include <stdlib.h>
+        -:   20:
+function testVillageRefactor called 1 returned 100% blocks executed 81%
+        1:   21:void testVillageRefactor(){
+        1:   22:    int numPlayer = 2;
+        -:   23:    struct gameState G;
+        -:   24:    int player, before_hand, before_playCard, before_deck, before_action, after_hand, after_playCard, after_deck, after_action;
+        -:   25:    
+        -:   26:    int handPos;
+        1:   27:    int k[12] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall, minion, steward};
+        -:   28:    
+        1:   29:    printf("+++++villageRefactor() tests begin+++++\n");
+call    0 returned 100%
+        -:   30:    
+        1:   31:    initializeGame(numPlayer, k, 2, &G); // init a game
+call    0 returned 100%
+        -:   32:        // test playing village card for each player
+        3:   33:    for (player = 0; player < numPlayer; player++){
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
+        2:   34:        G.hand[player][G.handCount[player]] = village; // player gets the village card
+        2:   35:        G.handCount[player]++;
+        2:   36:        handPos = G.handCount[player] - 1; // record the village card position
+        -:   37:        
+        2:   38:        before_hand = G.handCount[player]; // record the total cards number in hand
+        2:   39:        before_deck = G.deckCount[player]; // record the total cards number in deck
+        2:   40:        before_playCard = G.playedCardCount; // record the play cards number
+        2:   41:        before_action = G.numActions;
+        -:   42:
+        2:   43:        villageRefactor(&player, &G, &handPos);//play the adventure card
+call    0 returned 100%
+        -:   44:        
+        2:   45:        after_hand = G.handCount[player]; // record the total cards number in hand
+        2:   46:        after_deck = G.deckCount[player]; // record the total cards number in deck
+        2:   47:        after_playCard = G.playedCardCount; // record the play cards number
+        2:   48:        after_action = G.numActions;
+        -:   49:        
+        2:   50:        printf("-------------Test player %d----------------.\n", player);
+call    0 returned 100%
+        2:   51:        printf("Test player %d had %d card(s) in hand before, and %d card(s) after playing village.\n", player, before_hand, after_hand);
+call    0 returned 100%
+        2:   52:        printf("Test player %d had %d card(s) in deck before, and %d card(s) after playing village.\n", player, before_deck, after_deck);
+call    0 returned 100%
+        2:   53:        printf("Test player %d had %d playcard(s) before, and %d playcard(s) after playing village.\n", player, before_playCard, after_playCard);
+call    0 returned 100%
+        2:   54:        printf("Test player %d had %d actions, but now has %d actions after playing village.\n", player, before_action, after_action);
+call    0 returned 100%
+        -:   55:        
+        2:   56:        assert(before_hand == after_hand); // get 1 new card in hand now but used village.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   57:        assert(before_deck - 1 == after_deck); // deck lost 1 card now.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   58:        assert(before_playCard + 1 == after_playCard); // village card goes to playcards.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        2:   59:        assert(before_action + 2 == after_action); // gets 2 more actions
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        -:   60:    }
+        1:   61:    printf("+++++villageRefactor() test passed+++++\n");
+call    0 returned 100%
+        -:   62:    
+        1:   63:}
+        -:   64:
+function main called 1 returned 100% blocks executed 100%
+        1:   65:int main(int argc, char *argv[]){
+        1:   66:    testVillageRefactor();
+call    0 returned 100%
+        1:   67:    return 0;
+        -:   68:}
+        -:   69:
+        -:   70:

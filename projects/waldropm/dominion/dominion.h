@@ -132,4 +132,7 @@ int smithyRefactor (int *currentPlayer, struct gameState *state, int *handPos);
 
 int adventurerRefactor(int *drawntreasure, struct gameState *state, int *currentPlayer, int *cardDrawn, int *temphand, int *z);
 
+int villageRefactor (int *currentPlayer, struct gameState *state, int *handPos);
+
+int greatHallRefactor(int *currentPlayer, struct gameState *state, int *handPos);
 #endif

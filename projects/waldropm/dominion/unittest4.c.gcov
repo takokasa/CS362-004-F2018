@@ -1,0 +1,209 @@
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Include the following lines in your makefile:
+        -:    3: *
+        -:    4: *  testSupplyCount: testSupplyCount dominion.o rngs.o
+        -:    5: *	gcc -o testSupplyCount -g  testSupplyCount.c dominion.o rngs.o $(CFLAGS)
+        -:    6: *
+        -:    7: * type "./testSupplyCount" to run
+        -:    8: * -----------------------------------------------------------------------
+        -:    9: */
+        -:   10:
+        -:   11:#include "dominion.h"
+        -:   12:#include "dominion_helpers.h"
+        -:   13:#include <string.h>
+        -:   14:#include <stdio.h>
+        -:   15:#include <assert.h>
+        -:   16:#include "rngs.h"
+        -:   17:#include <math.h>
+        -:   18:#include <stdlib.h>
+        -:   19:
+function setSupplyCount called 3 returned 100% blocks executed 100%
+        3:   20:void setSupplyCount(int numPlayers, struct gameState *state){
+        -:   21:        //initialize supply
+        -:   22:    ///////////////////////////////
+        -:   23:    
+        -:   24:    //set number of Curse cards
+        3:   25:    if (numPlayers == 2)
+branch  0 taken 33% (fallthrough)
+branch  1 taken 67%
+        -:   26:    {
+        1:   27:        state->supplyCount[curse] = 10;
+        -:   28:    }
+        2:   29:    else if (numPlayers == 3)
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+        -:   30:    {
+        1:   31:        state->supplyCount[curse] = 20;
+        -:   32:    }
+        -:   33:    else
+        -:   34:    {
+        1:   35:        state->supplyCount[curse] = 30;
+        -:   36:    }
+        -:   37:    
+        -:   38:    //set number of Victory cards
+        3:   39:    if (numPlayers == 2)
+branch  0 taken 33% (fallthrough)
+branch  1 taken 67%
+        -:   40:    {
+        1:   41:        state->supplyCount[estate] = 8;
+        1:   42:        state->supplyCount[duchy] = 8;
+        1:   43:        state->supplyCount[province] = 8;
+        -:   44:    }
+        -:   45:    else
+        -:   46:    {
+        2:   47:        state->supplyCount[estate] = 12;
+        2:   48:        state->supplyCount[duchy] = 12;
+        2:   49:        state->supplyCount[province] = 12;
+        -:   50:    }
+        -:   51:    
+        -:   52:    //set number of Treasure cards
+        3:   53:    state->supplyCount[copper] = 60 - (7 * numPlayers);
+        3:   54:    state->supplyCount[silver] = 40;
+        3:   55:    state->supplyCount[gold] = 30;
+        3:   56:}
+        -:   57:
+        -:   58:
+function testSupplyCount called 1 returned 100% blocks executed 70%
+        1:   59:void testSupplyCount(){
+        -:   60:    struct gameState G;
+        1:   61:    printf ("TESTING supplyCount():\n");
+call    0 returned 100%
+        -:   62:    
+        -:   63:    // test for 2 players
+        1:   64:    setSupplyCount(2, &G);
+call    0 returned 100%
+        1:   65:    assert(supplyCount(curse, &G) == 10);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   66:    assert(supplyCount(estate, &G) == 8);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   67:    assert(supplyCount(duchy, &G) == 8);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   68:    assert(supplyCount(province, &G) == 8);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        -:   69:    
+        1:   70:    assert(supplyCount(copper, &G) == 60 - 7*2);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   71:    assert(supplyCount(silver, &G) == 40);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   72:    assert(supplyCount(gold, &G) == 30);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        -:   73:    
+        -:   74:    // test for 3 players
+        1:   75:    memset(&G, 0, sizeof(G));// clear the game state
+        1:   76:    setSupplyCount(3, &G);
+call    0 returned 100%
+        1:   77:    assert(supplyCount(curse, &G) == 20);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   78:    assert(supplyCount(estate, &G) == 12);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   79:    assert(supplyCount(duchy, &G) == 12);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   80:    assert(supplyCount(province, &G) == 12);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        -:   81:    
+        1:   82:    assert(supplyCount(copper, &G) == 60 - 7*3);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   83:    assert(supplyCount(silver, &G) == 40);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   84:    assert(supplyCount(gold, &G) == 30);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        -:   85:
+        -:   86:    // test for 6 players
+        1:   87:    memset(&G, 0, sizeof(G));// clear the game state
+        1:   88:    setSupplyCount(6, &G);
+call    0 returned 100%
+        1:   89:    assert(supplyCount(curse, &G) == 30);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   90:    assert(supplyCount(estate, &G) == 12);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   91:    assert(supplyCount(duchy, &G) == 12);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   92:    assert(supplyCount(province, &G) == 12);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        -:   93:    
+        1:   94:    assert(supplyCount(copper, &G) == 60 - 7*6);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   95:    assert(supplyCount(silver, &G) == 40);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   96:    assert(supplyCount(gold, &G) == 30);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        -:   97:    
+        1:   98:    printf("All tests passed!\n");
+call    0 returned 100%
+        -:   99:    
+        1:  100:}
+        -:  101:
+function main called 1 returned 100% blocks executed 100%
+        1:  102:int main(int argc, char *argv[]){
+        1:  103:    testSupplyCount();
+call    0 returned 100%
+        1:  104:    return 0;
+        -:  105:}

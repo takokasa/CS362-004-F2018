@@ -1,0 +1,79 @@
+        -:    0:Source:unittest1.c
+        -:    0:Graph:unittest1.gcno
+        -:    0:Data:unittest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: * Include the following lines in your makefile:
+        -:    3: *
+        -:    4: * testCompare: testCompare.c dominion.o rngs.o
+        -:    5: *	gcc -o testCompare -g  testCompare.c dominion.o rngs.o $(CFLAGS)
+        -:    6: *  
+        -:    7: * type "./testCompare" to run
+        -:    8: * -----------------------------------------------------------------------
+        -:    9: */
+        -:   10:
+        -:   11:#include "dominion.h"
+        -:   12:#include "dominion_helpers.h"
+        -:   13:#include <string.h>
+        -:   14:#include <stdio.h>
+        -:   15:#include <assert.h>
+        -:   16:#include "rngs.h"
+        -:   17:#include <math.h>
+        -:   18:#include <stdlib.h>
+        -:   19:
+        -:   20:int compare(const void* a, const void* b);
+        -:   21:
+function compareArray called 1 returned 100% blocks executed 86%
+        1:   22:char compareArray(int a[],int b[],int size)	{
+        -:   23:    int i;
+        7:   24:    for(i = 0; i < size; i++){
+branch  0 taken 86%
+branch  1 taken 14% (fallthrough)
+        6:   25:        if(a[i] != b[i]){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   26:            return 1;
+        -:   27:        }
+        -:   28:    }
+        1:   29:    return 0;
+        -:   30:}
+        -:   31:
+function testCompare called 1 returned 100% blocks executed 73%
+        1:   32:void testCompare() {
+        1:   33:    int a = 1, b = 2, c = 1;
+        1:   34:    assert(compare(&a, &b) == -1);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   35:    assert(compare(&b, &a) == 1);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   36:    assert(compare(&a, &c) == 0);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        -:   37:
+        1:   38:    int values[6] = { 40, 10, 100, 90, 20, 25 };
+        1:   39:    int desired_values[6] = { 10, 20, 25, 40, 90, 100 };
+        1:   40:    qsort (values, 6, sizeof(int), compare);
+call    0 returned 100%
+        1:   41:    assert(compareArray(values, desired_values, 6) == 0);
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+        1:   42:    printf("testCompare(): PASS when test sorting an array\n");
+call    0 returned 100%
+        1:   43:}
+        -:   44:
+function main called 1 returned 100% blocks executed 100%
+        1:   45:int main(int argc, char *argv[]){
+        1:   46:    testCompare();
+call    0 returned 100%
+        1:   47:    return 0;
+        -:   48:}

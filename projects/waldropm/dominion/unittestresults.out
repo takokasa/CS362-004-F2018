@@ -1,0 +1,65 @@
+******** Running Unit and Card Test ********
+******** Coverage ********
+File 'unittest1.c'
+Lines executed:94.74% of 19
+Branches executed:100.00% of 12
+Taken at least once:58.33% of 12
+Calls executed:63.64% of 11
+Creating 'unittest1.c.gcov'
+
+File 'unittest2.c'
+Lines executed:100.00% of 44
+Branches executed:100.00% of 24
+Taken at least once:83.33% of 24
+Calls executed:71.43% of 14
+Creating 'unittest2.c.gcov'
+
+File 'unittest3.c'
+Lines executed:100.00% of 21
+Branches executed:100.00% of 10
+Taken at least once:60.00% of 10
+Calls executed:63.64% of 11
+Creating 'unittest3.c.gcov'
+
+File 'unittest4.c'
+Lines executed:100.00% of 50
+Branches executed:100.00% of 48
+Taken at least once:56.25% of 48
+Calls executed:56.25% of 48
+Creating 'unittest4.c.gcov'
+
+File 'cardtest1.c'
+Lines executed:100.00% of 28
+Branches executed:100.00% of 8
+Taken at least once:62.50% of 8
+Calls executed:75.00% of 12
+Creating 'cardtest1.c.gcov'
+
+File 'cardtest2.c'
+Lines executed:81.54% of 65
+Branches executed:80.00% of 40
+Taken at least once:52.50% of 40
+Calls executed:73.91% of 23
+Creating 'cardtest2.c.gcov'
+
+File 'cardtest3.c'
+Lines executed:100.00% of 32
+Branches executed:100.00% of 10
+Taken at least once:60.00% of 10
+Calls executed:71.43% of 14
+Creating 'cardtest3.c.gcov'
+
+File 'cardtest4.c'
+Lines executed:100.00% of 32
+Branches executed:100.00% of 10
+Taken at least once:60.00% of 10
+Calls executed:71.43% of 14
+Creating 'cardtest4.c.gcov'
+
+File 'dominion.c'
+Lines executed:26.16% of 558
+Branches executed:24.46% of 417
+Taken at least once:20.38% of 417
+Calls executed:14.74% of 95
+Creating 'dominion.c.gcov'
+

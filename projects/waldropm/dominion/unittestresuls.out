@@ -1,0 +1,67 @@
+make[1]: Entering directory `/nfs/stak/users/waldropm/CS362/CS362-004-F2018/projects/waldropm/dominion'
+./unittest1
+testCompare(): PASS when test sorting an array
+./unittest2
+TESTING fullDeckCount():
+fullDeckCount() = 30, expected = 30
+fullDeckCount() = 30, expected = 30
+fullDeckCount() = 30, expected = 30
+fullDeckCount() = 30, expected = 30
+fullDeckCount() = 30, expected = 30
+fullDeckCount() = 30, expected = 30
+All tests passed!
+./unittest3
+TESTING isGameOver():
+All tests for isGameOver() passed!
+./unittest4
+TESTING supplyCount():
+All tests passed!
+./cardtest1
++++++smithyRefactor() tests begin+++++
+-------------Test player 0----------------.
+Test player 0 had 6 card(s) in hand before, and 8 card(s) after playing smithy.
+Test player 0 had 5 card(s) in deck before, and 2 card(s) after playing smithy.
+Test player 0 had 0 playcard(s) before, and 1 playcard(s) after playing smithy.
+-------------Test player 1----------------.
+Test player 1 had 1 card(s) in hand before, and 3 card(s) after playing smithy.
+Test player 1 had 10 card(s) in deck before, and 7 card(s) after playing smithy.
+Test player 1 had 1 playcard(s) before, and 2 playcard(s) after playing smithy.
++++++smithyRefactor() test passed+++++
+./cardtest2
++++++adventurerRefactor() tests begin+++++
+-------------Test player 0----------------.
+Test player 0 had 3 treasure card(s) in deck, and total 5 cards in deck before.
+Test player 0 had 3 card(s) in deck after playing adventure.
+Test player 0 had 4 treasure card(s) in hand before, but now has 6 treasure cards after playing adventure.
+-------------Test player 1----------------.
+Test player 1 had 7 treasure card(s) in deck, and total 10 cards in deck before.
+Test player 1 had 8 card(s) in deck after playing adventure.
+Test player 1 had 0 treasure card(s) in hand before, but now has 2 treasure cards after playing adventure.
++++++adventurerRefactor() test passed+++++
+./cardtest3
++++++villageRefactor() tests begin+++++
+-------------Test player 0----------------.
+Test player 0 had 6 card(s) in hand before, and 6 card(s) after playing village.
+Test player 0 had 5 card(s) in deck before, and 4 card(s) after playing village.
+Test player 0 had 0 playcard(s) before, and 1 playcard(s) after playing village.
+Test player 0 had 1 actions, but now has 3 actions after playing village.
+-------------Test player 1----------------.
+Test player 1 had 1 card(s) in hand before, and 1 card(s) after playing village.
+Test player 1 had 10 card(s) in deck before, and 9 card(s) after playing village.
+Test player 1 had 1 playcard(s) before, and 2 playcard(s) after playing village.
+Test player 1 had 3 actions, but now has 5 actions after playing village.
++++++villageRefactor() test passed+++++
+./cardtest4
+++++++greatHallRefactor() tests begin+++++
+-------------Test player 0----------------.
+Test player 0 had 6 card(s) in hand before, and 6 card(s) after playing great_hall.
+Test player 0 had 5 card(s) in deck before, and 4 card(s) after playing great_hall.
+Test player 0 had 0 playcard(s) before, and 1 playcard(s) after playing great_hall.
+Test player 0 had 1 actions, but now has 2 actions after playing great_hall.
+-------------Test player 1----------------.
+Test player 1 had 1 card(s) in hand before, and 1 card(s) after playing great_hall.
+Test player 1 had 10 card(s) in deck before, and 9 card(s) after playing great_hall.
+Test player 1 had 1 playcard(s) before, and 2 playcard(s) after playing great_hall.
+Test player 1 had 2 actions, but now has 3 actions after playing great_hall.
++++++greatHallRefactor() test passed+++++
+make[1]: Leaving directory `/nfs/stak/users/waldropm/CS362/CS362-004-F2018/projects/waldropm/dominion'
