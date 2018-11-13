@@ -1,0 +1,163 @@
+Testing villageRefactor() by using a random tester.
+RANDOM TESTS.
+Finished 500 tests.
+Finished 1000 tests.
+Finished 1500 tests.
+Finished 2000 tests.
+ALL TESTS OK
+File 'randomtestcard2.c'
+Lines executed:97.56% of 41
+Branches executed:100.00% of 26
+Taken at least once:69.23% of 26
+Calls executed:71.43% of 21
+Creating 'randomtestcard2.c.gcov'
+
+        -:    0:Source:randomtestcard2.c
+        -:    0:Graph:randomtestcard2.gcno
+        -:    0:Data:randomtestcard2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: *  Test villageRefactor() by using a random tester.
+        -:    3: *  Include the following lines in your makefile:
+        -:    4: *
+        -:    5: *  randomtestcard1: randomtestcard1.c dominion.o rngs.o
+        -:    6: *	gcc -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+        -:    7: *
+        -:    8: * type "./randomtestcard1" to run
+        -:    9: * -----------------------------------------------------------------------
+        -:   10: */
+        -:   11:
+        -:   12:#include "dominion.h"
+        -:   13:#include "dominion_helpers.h"
+        -:   14:#include <string.h>
+        -:   15:#include <stdio.h>
+        -:   16:#include <assert.h>
+        -:   17:#include "rngs.h"
+        -:   18:#include <math.h>
+        -:   19:#include <stdlib.h>
+        -:   20:
+        -:   21:// find a target card in the hand
+function findCardInHand called 2000 returned 100% blocks executed 86%
+     2000:   22:int findCardInHand(int player, struct gameState *state, int card) {
+        -:   23:    int i;
+   501190:   24:    for (i = 0; i < state->deckCount[player]; i++){
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+   499190:   25:        if(card == state->deck[player][i]){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   26:            return i;
+        -:   27:        }
+        -:   28:    }
+     2000:   29:    return -1;
+        -:   30:}
+        -:   31:
+function checkVillageRefactor called 2000 returned 100% blocks executed 70%
+     2000:   32:int checkVillageRefactor(int player, struct gameState *post) {
+        -:   33:    struct gameState pre;
+        -:   34:    int r, handPos;
+        -:   35:
+     2000:   36:    handPos = findCardInHand(player, post, village);
+call    0 returned 100%
+        -:   37:    
+     2000:   38:    if(handPos < 0){ // if did not have a village card, then get one
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+     2000:   39:        post->hand[player][post->handCount[player]] = village; // player gets the village card
+     2000:   40:        post->handCount[player]++;
+     2000:   41:        handPos = post->handCount[player] - 1; // record the village card position
+        -:   42:    }
+     2000:   43:    memcpy (&pre, post, sizeof(struct gameState)); // copy from post to pre
+        -:   44:
+     2000:   45:    r = villageRefactor(&player, post, &handPos);//play the village card
+call    0 returned 100%
+        -:   46:        
+     2000:   47:    if(pre.deckCount[player] <= 0){ // if there are not enough cards in deck, pull all the cards to discard pile. 
+branch  0 taken 1% (fallthrough)
+branch  1 taken 99%
+        3:   48:        pre.deckCount[player] = pre.discardCount[player];
+        3:   49:        pre.discardCount[player] = 0;
+        -:   50:    }
+        -:   51:    
+     2000:   52:    assert (r == 0);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   53:    assert(pre.handCount[player] == post->handCount[player]);// get 1 new card in hand now but used village.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   54:    assert(pre.deckCount[player] - 1 == post->deckCount[player]); // deck lost 1 card now.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   55:    assert(pre.discardCount[player] == post->discardCount[player]);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   56:    assert(pre.numActions + 2 == post->numActions); // gets 2 more actions
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   57:    assert(pre.playedCardCount + 1 == post->playedCardCount); // village card goes to playcards.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   58:    return 0;
+        -:   59:}
+        -:   60:
+        -:   61:
+function main called 1 returned 100% blocks executed 100%
+        1:   62:int main(int argc, char *argv[]){
+        -:   63:    int i, n, p;
+        -:   64:
+        -:   65:    struct gameState G;
+        -:   66:
+        1:   67:    printf ("Testing villageRefactor() by using a random tester.\n");
+call    0 returned 100%
+        -:   68:
+        1:   69:    printf ("RANDOM TESTS.\n");
+call    0 returned 100%
+        -:   70:
+        1:   71:    SelectStream(2);
+call    0 returned 100%
+        1:   72:    PutSeed(3);
+call    0 returned 100%
+        -:   73:
+     2001:   74:    for (n = 0; n < 2000; n++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+ 52602000:   75:        for (i = 0; i < sizeof(struct gameState); i++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+ 52600000:   76:            ((char*)&G)[i] = floor(Random() * 256);
+call    0 returned 100%
+        -:   77:        }
+     2000:   78:        p = floor(Random() * 2);
+call    0 returned 100%
+     2000:   79:        G.deckCount[p] = floor(Random() * MAX_DECK);
+call    0 returned 100%
+     2000:   80:        G.discardCount[p] = 3 + floor(Random() * MAX_DECK);
+call    0 returned 100%
+     2000:   81:        G.handCount[p] = floor(Random() * MAX_HAND);
+call    0 returned 100%
+     2000:   82:        G.playedCardCount = floor(Random() * MAX_HAND);
+call    0 returned 100%
+        -:   83:
+     2000:   84:        checkVillageRefactor(p, &G);
+call    0 returned 100%
+        -:   85:        
+     2000:   86:        if((n + 1) % 500 == 0){
+branch  0 taken 1% (fallthrough)
+branch  1 taken 99%
+        4:   87:            printf ("Finished %d tests.\n", n + 1);
+call    0 returned 100%
+        -:   88:        }
+        -:   89:    }
+        -:   90:
+        1:   91:    printf ("ALL TESTS OK\n");
+call    0 returned 100%
+        1:   92:    return 0;
+        -:   93:}
+        -:   94:
