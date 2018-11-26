@@ -1,0 +1,153 @@
+        -:    0:Source:randomtestcard3.c
+        -:    0:Graph:randomtestcard3.gcno
+        -:    0:Data:randomtestcard3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* -----------------------------------------------------------------------
+        -:    2: *  Test villageRefactor() by using a random tester.
+        -:    3: *  Include the following lines in your makefile:
+        -:    4: *
+        -:    5: *  randomtestcard3: randomtestcard3.c dominion.o rngs.o
+        -:    6: *	gcc -o randomtestcard3 -g  randomtestcard3.c dominion.o rngs.o $(CFLAGS)
+        -:    7: *
+        -:    8: * type "./randomtestcard3" to run
+        -:    9: * -----------------------------------------------------------------------
+        -:   10: */
+        -:   11:
+        -:   12:#include "dominion.h"
+        -:   13:#include "dominion_helpers.h"
+        -:   14:#include <string.h>
+        -:   15:#include <stdio.h>
+        -:   16:#include <assert.h>
+        -:   17:#include "rngs.h"
+        -:   18:#include <math.h>
+        -:   19:#include <stdlib.h>
+        -:   20:
+        -:   21:// find a target card in the hand
+function findCardInHand called 2000 returned 100% blocks executed 86%
+     2000:   22:int findCardInHand(int player, struct gameState *state, int card) {
+        -:   23:    int i;
+   501256:   24:    for (i = 0; i < state->deckCount[player]; i++){
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+   499256:   25:        if(card == state->deck[player][i]){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   26:            return i;
+        -:   27:        }
+        -:   28:    }
+     2000:   29:    return -1;
+        -:   30:}
+        -:   31:
+function checkCouncilRefactor called 2000 returned 100% blocks executed 73%
+     2000:   32:int checkCouncilRefactor(int player, struct gameState *post) {
+        -:   33:    struct gameState pre;
+        -:   34:    int r, handPos;
+     2000:   35:    int other_player = (player == 0 ? 1 : 0);  // check the other player
+        -:   36:    // post->handCount[other_player] = 0;
+        -:   37:    // post->deckCount[other_player] = 1;
+        -:   38:    // printf("Other_player %d had %d card(s) in hand, and %d card(s) in deck.\n", player, post->handCount[other_player] , post->deckCount[other_player]);
+     2000:   39:    handPos = findCardInHand(player, post, council_room);
+call    0 returned 100%
+        -:   40:    
+     2000:   41:    if(handPos < 0){ // if did not have a council_room card, then get one
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+     2000:   42:        post->hand[player][post->handCount[player]] = council_room; // player gets the council_room card
+     2000:   43:        post->handCount[player]++;
+     2000:   44:        handPos = post->handCount[player] - 1; // record the council_room card position
+        -:   45:    }
+     2000:   46:    post->numBuys = 0;
+     2000:   47:    memcpy (&pre, post, sizeof(struct gameState)); // copy from post to pre
+        -:   48:
+        -:   49:    
+     2000:   50:    r = cardCouncil(player, post, handPos); // play the council_room card
+call    0 returned 100%
+        -:   51:    
+     2000:   52:    assert (r == 0);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   53:    printf("player %d had %d card(s) in hand before, and %d card(s) in hand after playing council_room.\n", player, pre.handCount[player] , post->handCount[player]);
+call    0 returned 100%
+     2000:   54:    assert(pre.handCount[player] + 3 == post->handCount[player]);// get 4 new cards in hand now but used council.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   55:    assert(pre.playedCardCount + 1 == post->playedCardCount); // council_room card goes to playcards.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+        -:   56:    
+        -:   57:    // printf("Test player %d had %d card(s) in hand before, and %d card(s) after playing council_room.\n", player, pre.handCount[other_player], post->handCount[other_player]);
+     2000:   58:    assert(pre.handCount[other_player] + 1 == post->handCount[other_player]);// get 1 new card in hand for other player.
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+     2000:   59:    return 0;
+        -:   60:}
+        -:   61:
+        -:   62:
+function main called 1 returned 100% blocks executed 100%
+        1:   63:int main(int argc, char *argv[]){
+        -:   64:    int i, n, p;
+        1:   65:    int numPlayers = 2;
+        -:   66:
+        -:   67:    struct gameState G;
+        -:   68:
+        1:   69:    printf ("Testing cardCouncil() by using a random tester.\n");
+call    0 returned 100%
+        -:   70:
+        1:   71:    printf ("RANDOM TESTS.\n");
+call    0 returned 100%
+        -:   72:
+        1:   73:    SelectStream(2);
+call    0 returned 100%
+        1:   74:    PutSeed(3);
+call    0 returned 100%
+        -:   75:
+     2001:   76:    for (n = 0; n < 2000; n++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+ 52602000:   77:        for (i = 0; i < sizeof(struct gameState); i++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+ 52600000:   78:            ((char*)&G)[i] = floor(Random() * 256);
+call    0 returned 100%
+        -:   79:        }
+     2000:   80:        G.numPlayers = numPlayers;
+     2000:   81:        p = floor(Random() * numPlayers);
+call    0 returned 100%
+     6000:   82:        for( int j = 0; j < 2; j++){
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
+     4000:   83:            G.deckCount[j] = floor(Random() * MAX_DECK);
+call    0 returned 100%
+     4000:   84:            G.discardCount[j] = 3 + floor(Random() * MAX_DECK);
+call    0 returned 100%
+     4000:   85:            G.handCount[j] = floor(Random() * MAX_HAND);
+call    0 returned 100%
+        -:   86:        }
+        -:   87:        
+        -:   88:        // G.deckCount[p] = floor(Random() * MAX_DECK);
+        -:   89:        // G.discardCount[p] = 3 + floor(Random() * MAX_DECK);
+        -:   90:        // G.handCount[p] = floor(Random() * MAX_HAND);
+     2000:   91:        G.playedCardCount = floor(Random() * MAX_HAND);
+call    0 returned 100%
+        -:   92:
+     2000:   93:        checkCouncilRefactor(p, &G);
+call    0 returned 100%
+        -:   94:        
+     2000:   95:        if((n + 1) % 500 == 0){
+branch  0 taken 1% (fallthrough)
+branch  1 taken 99%
+        4:   96:            printf ("Finished %d tests.\n", n + 1);
+call    0 returned 100%
+        -:   97:        }
+        -:   98:    }
+        -:   99:
+        1:  100:    printf ("ALL TESTS OK\n");
+call    0 returned 100%
+        1:  101:    return 0;
+        -:  102:}
+        -:  103:
